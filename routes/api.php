@@ -19,10 +19,16 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // Auth routes
-Route::group([
-    // 'prefix' => 'v1'
-], function () {
+Route::group([], function() {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
 
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('logout', 'AuthController@logout');
+    });
+});
+
+// Create page routes
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::post('page/create', 'PageController@createPage');
 });

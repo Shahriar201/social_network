@@ -79,4 +79,10 @@ class AuthController extends Controller
 
 
     }
+
+    public function logout(Request $request) {
+        $request->user()->token()->revoke();
+
+        return $this->set_response(null, 200, 'success', ['Successfully logout']);
+    }
 }
