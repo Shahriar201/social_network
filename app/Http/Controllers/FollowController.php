@@ -29,12 +29,13 @@ class FollowController extends Controller
         try {
             $person = Person::where('id', $userId)->first();
 
-            Follow::updateOrCreate([
-                'followed_person_id' => $person->id,
-                'created_by'         => $userId
-            ]);
+            // Follow person_id insert
+            $follow = new Follow();
+            $follow->followed_person_id = $person->id;
+            $follow->created_by = auth()->user()->id;
+            $follow->save();
 
-            return $this->set_response($person, 200, 'success', ['Followed Another Person']);
+            return $this->set_response($follow, 200, 'success', ['Followed Another Person']);
         } catch (\Exception $e) {
             return $e;
         }
