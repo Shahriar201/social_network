@@ -25,15 +25,13 @@ class AuthController extends Controller
             return $this->set_response(null, 422, 'failed', $validator->errors()->all());
         }
 
-        // create person
+        // Register a person
         $person = Person::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' =>  bcrypt($request->password),
         ]);
-
-        // return ['person' => $person];
 
         return $this->set_response($person, 200, 'success', ['Person Created Successfully']);
     }
@@ -64,7 +62,6 @@ class AuthController extends Controller
 
             $tokenData = [
                 'access_token'  => $tokenRes->accessToken,
-
                 'user' => [
                     'token_type'    => 'Bearer',
                     'expires_at'    => Carbon::parse($token->expires_at)->toDateTimeString(),
@@ -73,7 +70,7 @@ class AuthController extends Controller
                     'email'         => $user->email,
                 ]
             ];
-            // return ['responseData' => $tokenData];
+
             return $this->set_response($tokenData, 200, 'success', ['Logged in!']);
         }
 

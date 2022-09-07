@@ -21,14 +21,5 @@ class PersonController extends Controller
                 ->get()->toArray();
 
         return $this->set_response($feed, 200, 'success', ['Logged in user news feed']);
-
-        // $newsFeed = DB::table('posts as post')
-        //             ->where('post.created_by', $userId)
-        //             ->leftJoin('people as people', 'people.id', 'post.created_by')
-        //             ->leftJoin('pages as page', 'page.id', 'post.page_id')
-        //             ->leftJoin('follows as follow', 'follow.created_by', 'post.created_by')
-        //             ->get()->toArray();
-        //             dd($newsFeed);
-
     }
 }

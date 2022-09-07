@@ -20,6 +20,7 @@ class PageController extends Controller
             return $this->set_response(null, 422, 'failed', $validator->errors()->all());
         }
 
+        // Create Page
         $page = new Page();
         $page->page_name = $request->page_name;
         $page->created_by = auth()->user()->id;

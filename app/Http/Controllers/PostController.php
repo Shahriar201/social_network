@@ -13,6 +13,7 @@ class PostController extends Controller
     use ApiResponser;
 
     public function personPostPublish(Request $request) {
+
         $validator = Validator::make($request->all(), [
             'person_post_content'      => 'required',
         ]);
@@ -59,7 +60,7 @@ class PostController extends Controller
                 return $this->set_response(null, 422, 'failed', ['This user does not have any pages']);
             }
 
-            // Create page post content if user have page
+            // Create post_content if user have page
             $pageContent = new Post();
             $pageContent->page_id = $pageId;
             $pageContent->page_post_content = $request->page_post_content;

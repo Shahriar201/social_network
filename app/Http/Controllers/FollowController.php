@@ -14,7 +14,9 @@ class FollowController extends Controller
     use ApiResponser;
 
     public function followPerson(Request $request, $personId) {
+
         $userId = auth()->user()->id;
+
         $validator = Validator::make([
             'personId' => $personId
         ],
@@ -27,9 +29,6 @@ class FollowController extends Controller
         }
 
         try {
-            $person = Person::where('id', $userId)->first();
-
-            // Follow person_id insert
             $follow = new Follow();
             $follow->followed_person_id = $personId;
             $follow->created_by = auth()->user()->id;
@@ -43,6 +42,7 @@ class FollowController extends Controller
     }
 
     public function followPage(Request $request, $pageId) {
+
         $pageId = $request->pageId;
 
         $validator = Validator::make([
@@ -57,11 +57,8 @@ class FollowController extends Controller
         }
 
         try {
-            $page = Page::where('id', $pageId)->first();
-
-            // Follow page_id insert
             $follow = new Follow();
-            $follow->followed_page_id = $page->id;
+            $follow->followed_page_id = $pageId;
             $follow->created_by = auth()->user()->id;
             $follow->save();
 
