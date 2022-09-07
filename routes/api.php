@@ -28,7 +28,10 @@ Route::group([], function() {
     });
 });
 
-// Create page routes
 Route::group(['middleware' => 'auth:api'], function() {
+    // Create page routes
     Route::post('page/create', 'PageController@createPage');
+
+    // Person route
+    Route::post('follow/person/{personId}', 'FollowController@followPerson');
 });

@@ -33,9 +33,9 @@ class AuthController extends Controller
             'password' =>  bcrypt($request->password),
         ]);
 
-        return ['person' => $person];
+        // return ['person' => $person];
 
-        // return $this->set_response($person, 200, 'success', ['Person Created Successfully']);
+        return $this->set_response($person, 200, 'success', ['Person Created Successfully']);
     }
 
     public function login(Request $request) {

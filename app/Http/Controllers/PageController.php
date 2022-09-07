@@ -21,7 +21,6 @@ class PageController extends Controller
         }
 
         $page = new Page();
-        $page->person_id = auth()->user()->id;
         $page->page_name = $request->page_name;
         $page->created_by = auth()->user()->id;
         $page->save();
