@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Person;
+use App\Post;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,26 +12,14 @@ class PersonController extends Controller
 {
     use ApiResponser;
 
-    public function followPerson(Request $request, $personId) {
+    public function personFeed(Request $request) {
         $userId = auth()->user()->id;
-        $validator = Validator::make([
-            'personId' => $personId
-        ],
-        [
-            'personId' => 'required|exists:people,id'
-        ]);
+        // dd($userId);
+        $feed = Post::with('person', 'page', 'follow')
+                ->where('created_by', $userId)
+                ->get()->toArray();
 
-        if($validator->fails()) {
-            return $this->set_response(null, 422, 'failed', $validator->errors()->all());
-        }
-
-        try {
-            $person = Person::where('id', $userId)->update(['followed_person_id' => $personId]);
-
-            return $this->set_response($person, 200, 'success', ['Followed Another Person']);
-        } catch (\Exception $e) {
-            return $e;
-        }
+        return $this->set_response($feed, 200, 'success', ['Logged in user news feed']);
 
     }
 }

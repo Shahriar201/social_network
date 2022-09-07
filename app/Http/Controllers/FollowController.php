@@ -31,7 +31,7 @@ class FollowController extends Controller
 
             // Follow person_id insert
             $follow = new Follow();
-            $follow->followed_person_id = $person->id;
+            $follow->followed_person_id = $personId;
             $follow->created_by = auth()->user()->id;
             $follow->save();
 
