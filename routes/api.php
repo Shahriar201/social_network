@@ -34,4 +34,5 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // Person route
     Route::post('follow/person/{personId}', 'FollowController@followPerson');
+    Route::post('follow/page/{pageId}', 'FollowController@followPage');
 });
