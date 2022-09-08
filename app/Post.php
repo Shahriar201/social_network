@@ -17,8 +17,4 @@ class Post extends Model
     public function page() {
         return $this->belongsTo(Page::class, 'page_id', 'id');
     }
-
-    public function follow() {
-        return $this->belongsTo(Follow::class, 'created_by', 'created_by');
-    }
 }
