@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Person;
+use App\Follow;
 use App\Post;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class PersonController extends Controller
 {
@@ -16,10 +14,20 @@ class PersonController extends Controller
     public function personFeed(Request $request) {
         $userId = auth()->user()->id;
 
-        $feed = Post::with('person', 'page', 'follow')
+        // Get logged In person page & post
+        $feed = Post::with('person', 'page')
                 ->where('created_by', $userId)
                 ->get()->toArray();
 
-        return $this->set_response($feed, 200, 'success', ['Logged in user news feed']);
+        // logged In person follow data
+        $follow = Follow::where('created_by', $userId)->get()->toArray();
+
+        // All info pushed into an array
+        $newsFeed = [
+            'newsFeed' => $feed,
+            'follow' => $follow
+        ];
+
+        return $this->set_response($newsFeed, 200, 'success', ['Logged in user news feed']);
     }
 }
